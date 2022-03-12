@@ -7,7 +7,7 @@ import pro.sky.employeeBook.data.Employee;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.OptionalDouble;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,32 +20,31 @@ public class EmployeeDepartmentsServiceImpl implements EmployeeDepartmentsServic
     }
 
     @Override
-    public OptionalDouble maxSalaryDepartment(Integer department) {
-        return employeeService.getEmployees().stream()
+    public Employee getMaxSalaryDepartment(int department) {
+       return employeeService.getEmployees().stream()
                 .filter(s -> s.getDepartment().equals(department))
-                .mapToDouble(s -> s.getEmployeeSalary())
-                .max();
+                .max(Comparator.comparingDouble(e -> e.getEmployeeSalary()))
+                .get();
     }
 
     @Override
-    public OptionalDouble minSalaryDepartment(Integer department) {
+    public Employee getMinSalaryDepartment(int department) {
         return employeeService.getEmployees().stream()
                 .filter(s -> s.getDepartment().equals(department))
-                .mapToDouble(s -> s.getEmployeeSalary())
-                .min();
+                .min(Comparator.comparingDouble(e -> e.getEmployeeSalary()))
+                .get();
     }
 
     @Override
-    public List<Employee> allEmployeeDepartment(Integer department) {
+    public List<Employee> getAllEmployeeDepartment(int department) {
         return employeeService.getEmployees().stream()
                 .filter(s -> s.getDepartment().equals(department))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Employee> allEmployees() {
+    public Map<Object, List<Employee>> getAllEmployees() {
         return employeeService.getEmployees().stream()
-                .sorted(Comparator.comparingInt(Employee::getDepartment))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 }

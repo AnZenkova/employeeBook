@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.employeeBook.Service.EmployeeDepartmentsService;
 
-import java.util.OptionalDouble;
-
 @RestController
 @RequestMapping("/employee/department")
 public class EmployeeDepartmentsController {
@@ -18,22 +16,22 @@ public class EmployeeDepartmentsController {
     public EmployeeDepartmentsService employeeDepartmentsService;
 
     @RequestMapping("/max-salary")
-    public OptionalDouble maxSalary(@RequestParam Integer departmentId) {
-        return employeeDepartmentsService.maxSalaryDepartment(departmentId);
+    public String maxSalary(@RequestParam Integer departmentId) {
+        return String.valueOf(employeeDepartmentsService.getMaxSalaryDepartment(departmentId));
     }
 
     @RequestMapping("/min-salary")
-    public OptionalDouble minSalary(@RequestParam Integer departmentId) {
-        return employeeDepartmentsService.minSalaryDepartment(departmentId);
+    public String minSalary(@RequestParam Integer departmentId) {
+        return String.valueOf(employeeDepartmentsService.getMinSalaryDepartment(departmentId));
     }
 
     @RequestMapping("/all")
     public String allEmployeeInDepartment(@RequestParam Integer departmentId) {
-        return String.valueOf(employeeDepartmentsService.allEmployeeDepartment(departmentId));
+        return String.valueOf(employeeDepartmentsService.getAllEmployeeDepartment(departmentId));
     }
 
-    @RequestMapping("/alldepartment")
+    @RequestMapping("/alldepartments")
     public String allEmployees() {
-        return String.valueOf(employeeDepartmentsService.allEmployees());
+        return String.valueOf(employeeDepartmentsService.getAllEmployees());
     }
 }
