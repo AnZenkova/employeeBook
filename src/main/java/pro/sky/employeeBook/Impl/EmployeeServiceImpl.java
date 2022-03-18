@@ -6,11 +6,7 @@ import pro.sky.employeeBook.Exception.NotFoundEmployeeException;
 import pro.sky.employeeBook.Service.EmployeeService;
 import pro.sky.employeeBook.data.Employee;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
-import java.util.stream.Collectors;
+import java.util.*;
 import java.util.stream.DoubleStream;
 
 @Service
@@ -28,6 +24,16 @@ public class EmployeeServiceImpl implements EmployeeService {
             "Никитин Адам", new Employee("Никитин", "Адам", 66_058.0, 5),
             "Кудрявцева Галина", new Employee("Кудрявцева", "Галина", 47_832.0, 5)
     ));
+
+    @Override
+    public String checkingTheString(String string) {
+        Boolean b = org.apache.commons.lang3.StringUtils.isAlpha(string);
+        if (!b) {
+            throw new EmployeeIsInArrayException("В строке содержаться недопустимые символы", null);
+        } else {
+            return org.apache.commons.lang3.StringUtils.capitalize(string);
+        }
+    }
 
     @Override
     public String addNewEmployee(String nameEmployee, Employee employee) {
@@ -61,14 +67,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployees() {
-        return employees.values().stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(employees.values());
     }
 
     @Override
     public double calculateCostOfSalary() { // сумма затрат на зарплаты
         Double sum = employees.values().stream()
-                .mapToDouble(value -> value.getEmployeeSalary())
+                .mapToDouble(Employee::getEmployeeSalary)
                 .sum();
         return sum;
     }
@@ -76,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public OptionalDouble findMinSalary() { // найти сотрудника с минимальной зарплатой
         OptionalDouble min = employees.values().stream()
-                .mapToDouble(value -> value.getEmployeeSalary())
+                .mapToDouble(Employee::getEmployeeSalary)
                 .min();
         return min;
     }
@@ -84,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public OptionalDouble findMaxSalary() { // найти сотрудника с максимальной зарплатой
         OptionalDouble max = employees.values().stream()
-                .mapToDouble(value -> value.getEmployeeSalary())
+                .mapToDouble(Employee::getEmployeeSalary)
                 .max();
         return max;
     }
@@ -92,7 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public OptionalDouble findAverageSalary() { // средняя зарплата сотрудников
         OptionalDouble average = employees.values().stream()
-                .mapToDouble(value -> value.getEmployeeSalary())
+                .mapToDouble(Employee::getEmployeeSalary)
                 .average();
         return average;
     }

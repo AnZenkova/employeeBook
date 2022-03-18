@@ -7,6 +7,7 @@ import java.util.OptionalDouble;
 import java.util.stream.DoubleStream;
 
 public interface EmployeeService {
+    String checkingTheString(String string);
     String addNewEmployee(String nameEmployee, Employee employee);
     void removeEmployee(String nameEmployee);
     Employee findEmployees(String nameEmployee);

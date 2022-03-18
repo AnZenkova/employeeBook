@@ -22,25 +22,31 @@ public class EmployeeBookController {
     @RequestMapping("/add")
     public String addEmployee(@RequestParam String firstName,
                               @RequestParam String lastName,
-                              @RequestParam Double employeeSalary,
-                              @RequestParam Integer employeeDepartment) {
-        String nameEmployee = lastName + " " + firstName;
-        Employee employee = new Employee(firstName, lastName, employeeSalary, employeeDepartment);
+                              @RequestParam Double salary,
+                              @RequestParam Integer department) {
+        firstName = employeeService.checkingTheString(firstName);
+        lastName = employeeService.checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
+        Employee employee = new Employee(firstName, lastName, salary, department);
         return "Сотрудник добавлен. " + employeeService.addNewEmployee(nameEmployee, employee);
     }
 
     @RequestMapping("/remove")
     public String remove(@RequestParam String firstName,
                          @RequestParam String lastName) {
-        String nameEmployee = lastName + " " + firstName;
+        employeeService.checkingTheString(firstName);
+        employeeService.checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
         employeeService.removeEmployee(nameEmployee);
-        return "Сотрудник " + nameEmployee + " удалён";
+        return "Сотрудник удалён";
     }
 
     @RequestMapping("/find")
     public String find(@RequestParam String firstName,
                        @RequestParam String lastName) {
-        String nameEmployee = lastName + " " + firstName;
+        employeeService.checkingTheString(firstName);
+        employeeService.checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
         return "Сотрудник найден. " + employeeService.findEmployees(nameEmployee);
     }
 
