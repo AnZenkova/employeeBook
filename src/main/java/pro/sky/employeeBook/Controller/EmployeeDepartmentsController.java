@@ -30,7 +30,7 @@ public class EmployeeDepartmentsController {
         return String.valueOf(employeeDepartmentsService.getAllEmployeeDepartment(departmentId));
     }
 
-    @RequestMapping("/alldepartments")
+    @RequestMapping("/allDepartments")
     public String allEmployees() {
         return String.valueOf(employeeDepartmentsService.getAllEmployees());
     }
