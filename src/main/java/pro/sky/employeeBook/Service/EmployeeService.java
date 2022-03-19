@@ -7,10 +7,9 @@ import java.util.OptionalDouble;
 import java.util.stream.DoubleStream;
 
 public interface EmployeeService {
-    String checkingTheString(String string);
-    String addNewEmployee(String nameEmployee, Employee employee);
-    void removeEmployee(String nameEmployee);
-    Employee findEmployees(String nameEmployee);
+    String addNewEmployee(String firstName, String lastName, Double salary, int department);
+    void removeEmployee(String firstName, String lastName);
+    Employee findEmployees(String firstName, String lastName);
     List<Employee> getEmployees();
     double calculateCostOfSalary();
     public OptionalDouble findMaxSalary();

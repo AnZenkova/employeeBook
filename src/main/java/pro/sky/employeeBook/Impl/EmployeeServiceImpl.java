@@ -25,8 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             "Кудрявцева Галина", new Employee("Кудрявцева", "Галина", 47_832.0, 5)
     ));
 
-    @Override
-    public String checkingTheString(String string) {
+    private String checkingTheString(String string) {
         Boolean b = org.apache.commons.lang3.StringUtils.isAlpha(string);
         if (!b) {
             throw new EmployeeIsInArrayException("В строке содержаться недопустимые символы", null);
@@ -36,7 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String addNewEmployee(String nameEmployee, Employee employee) {
+    public String addNewEmployee(String firstName, String lastName, Double salary, int department) {
+        firstName = checkingTheString(firstName);
+        lastName = checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
+        Employee employee = new Employee(firstName, lastName, salary, department);
         if (employees.containsValue(employee)){
             throw new EmployeeIsInArrayException("Такой сотрудник уже существует", null);
         } else {
@@ -46,16 +49,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void removeEmployee(String nameEmployee) {
+    public void removeEmployee(String firstName, String lastName) {
+        checkingTheString(firstName);
+        checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
         if (employees.containsKey(nameEmployee)) {
-            throw new NotFoundEmployeeException("Удаляемый сотрудник не найден", null);
-        } else {
             employees.remove(nameEmployee);
+        } else {
+            throw new NotFoundEmployeeException("Удаляемый сотрудник не найден", null);
         }
     }
 
     @Override
-    public Employee findEmployees(String nameEmployee) {
+    public Employee findEmployees(String firstName, String lastName) {
+        checkingTheString(firstName);
+        checkingTheString(lastName);
+        String nameEmployee = firstName + " " + lastName;
         Employee employee = null;
         if (employees.containsKey(nameEmployee)) {
             employee = employees.get(nameEmployee);

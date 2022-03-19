@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.employeeBook.Service.EmployeeService;
-import pro.sky.employeeBook.data.Employee;
 
 import java.util.OptionalDouble;
 import java.util.stream.DoubleStream;
@@ -24,30 +23,20 @@ public class EmployeeBookController {
                               @RequestParam String lastName,
                               @RequestParam Double salary,
                               @RequestParam Integer department) {
-        firstName = employeeService.checkingTheString(firstName);
-        lastName = employeeService.checkingTheString(lastName);
-        String nameEmployee = firstName + " " + lastName;
-        Employee employee = new Employee(firstName, lastName, salary, department);
-        return "Сотрудник добавлен. " + employeeService.addNewEmployee(nameEmployee, employee);
+        return "Сотрудник добавлен. " + employeeService.addNewEmployee(firstName, lastName, salary, department);
     }
 
     @RequestMapping("/remove")
     public String remove(@RequestParam String firstName,
                          @RequestParam String lastName) {
-        employeeService.checkingTheString(firstName);
-        employeeService.checkingTheString(lastName);
-        String nameEmployee = firstName + " " + lastName;
-        employeeService.removeEmployee(nameEmployee);
+        employeeService.removeEmployee(firstName, lastName);
         return "Сотрудник удалён";
     }
 
     @RequestMapping("/find")
     public String find(@RequestParam String firstName,
                        @RequestParam String lastName) {
-        employeeService.checkingTheString(firstName);
-        employeeService.checkingTheString(lastName);
-        String nameEmployee = firstName + " " + lastName;
-        return "Сотрудник найден. " + employeeService.findEmployees(nameEmployee);
+        return "Сотрудник найден. " + employeeService.findEmployees(firstName, lastName);
     }
 
     @RequestMapping("/get")
