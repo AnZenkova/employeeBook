@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pro.sky.employeeBook.Impl.EmployeeDepartmentsServiceImpl;
 import pro.sky.employeeBook.Impl.EmployeeServiceImpl;
 import pro.sky.employeeBook.Service.EmployeeDepartmentsService;
 import pro.sky.employeeBook.Service.EmployeeService;
@@ -25,24 +26,26 @@ public class EmployeeDepartmentServiceTest {
     private Employee employee1 = new Employee("Анисимова", "Данна", 114_430.0, 3);
 
     @Mock
-    private EmployeeDepartmentsService employeeDepartmentsService;
+    private EmployeeService employeeService = new EmployeeServiceImpl();
+
 
     @InjectMocks
-    private EmployeeService employeeService = new EmployeeServiceImpl();
+    private EmployeeDepartmentsService employeeDepartmentsService = new EmployeeDepartmentsServiceImpl(employeeService);
+
 
     @Test
     public void getMaxSalaryDepartment() {
 
-        Mockito.when(employeeDepartmentsService.getMaxSalaryDepartment(3)).thenReturn(employee);
+
+        Mockito.when(employeeService.getEmployees()).thenReturn(List.of(employee));
         Employee maxSalary = employeeDepartmentsService.getMaxSalaryDepartment(3);
 
         assertEquals(maxSalary, employee);
-
     }
 
     @Test
     public void getMinSalaryDepartment() {
-        Mockito.when(employeeDepartmentsService.getMinSalaryDepartment(3)).thenReturn(employee1);
+        Mockito.when(employeeService.getEmployees()).thenReturn(List.of(employee1));
         Employee minSalary = employeeDepartmentsService.getMinSalaryDepartment(3);
 
         assertEquals(minSalary, employee1);
@@ -53,7 +56,7 @@ public class EmployeeDepartmentServiceTest {
 
         List<Employee> actual = new ArrayList<Employee>(List.of(employee, employee1));
 
-        Mockito.when(employeeDepartmentsService.getAllEmployeeDepartment(3)).thenReturn(actual);
+        Mockito.when(employeeService.getEmployees()).thenReturn(actual);
 
         List<Employee> expected = employeeDepartmentsService.getAllEmployeeDepartment(3);
 

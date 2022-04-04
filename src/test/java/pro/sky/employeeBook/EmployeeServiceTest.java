@@ -46,6 +46,23 @@ public class EmployeeServiceTest {
         employeeService = new EmployeeServiceImpl();
     }
 
+    private List<Employee> addActualList() {
+
+        List<Employee> actual = new ArrayList<Employee>();
+
+        actual.add(employee10);
+        actual.add(employee9);
+        actual.add(employee8);
+        actual.add(employee7);
+        actual.add(employee6);
+        actual.add(employee5);
+        actual.add(employee4);
+        actual.add(employee3);
+        actual.add(employee2);
+        actual.add(employee1);
+        return actual;
+    }
+
     @Test
     public void addNewEmployee() {
         Employee employee11 = new Employee("Иванов", "Иван", 100_000.0, 3);
@@ -56,8 +73,8 @@ public class EmployeeServiceTest {
 
         List<Employee> expected = employeeService.getEmployees();
 
-        List<Employee> actual;
-        actual = new ArrayList<Employee>(List.of(employee1,employee2,employee3,employee4,employee5,employee6,employee7,employee8,employee9,employee10));
+        List<Employee> actual = new ArrayList<>();
+        actual = addActualList();
 
         actual.add(employee11);
         actual.add(employee12);
@@ -75,18 +92,8 @@ public class EmployeeServiceTest {
         List<Employee> expected = employeeService.getEmployees();
         expected.sort(Comparator.comparing(Employee::getEmployeeLastName));
 
-        List<Employee> actual = new ArrayList<Employee>();
-
-        actual.add(employee10);
-        actual.add(employee9);
-        actual.add(employee8);
-        actual.add(employee7);
-        actual.add(employee6);
-        actual.add(employee5);
-        actual.add(employee4);
-        actual.add(employee3);
-        actual.add(employee2);
-        actual.add(employee1);
+        List<Employee> actual = new ArrayList<>();
+        actual = addActualList();
 
         actual.sort(Comparator.comparing(Employee::getEmployeeLastName));
 
