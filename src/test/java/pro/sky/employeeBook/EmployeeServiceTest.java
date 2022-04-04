@@ -116,7 +116,6 @@ public class EmployeeServiceTest {
     @Test
     public void findEmployee() {
 
-        List<Employee> expected = employeeService.getEmployees();
         Employee findExpected = employeeService.findEmployees("Маслова", "Милиса");
 
         List<Employee> actual;
